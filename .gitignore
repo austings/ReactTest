@@ -4,11 +4,11 @@ yarn.lock
 build
 
 # dependencies
-Client/node_modules
+client/node_modules
 server/node_modules
 server/uploads
 server/.env
-Client/.env
+client/.env
 
 /.pnp
 .pnp.js

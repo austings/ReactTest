@@ -8,7 +8,7 @@ import { documentSchema } from './document.js';
 import { phoneCallSchema } from './phoneCallSchema.js';
 import { textMsgSchema } from './textMsgSchema.js';
 import { TaskSchema } from './taskSchema.js';
-import { MeetingSchema } from './meetingSchema.js';
+import { meetingSchema } from './meetingSchema.js';
 import { addFiledSchema } from './addFiledSchema.js'
 
 export {
@@ -23,5 +23,5 @@ export {
     TaskSchema,
     phoneCallSchema,
     textMsgSchema,
-    MeetingSchema,
+    meetingSchema,
 };

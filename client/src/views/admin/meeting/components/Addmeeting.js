@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 import { LiaMousePointerSolid } from 'react-icons/lia';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { MeetingSchema } from 'schema';
+import { meetingSchema } from 'schema';
 import { getApi, postApi } from 'services/api';
 
 const AddMeeting = (props) => {
@@ -41,7 +41,7 @@ const AddMeeting = (props) => {
 
     const formik = useFormik({
         initialValues: initialValues,
-        validationSchema: MeetingSchema,
+        validationSchema: meetingSchema,
         onSubmit: (values, { resetForm }) => {
             
         },

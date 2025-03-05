@@ -10,24 +10,24 @@ const meetingHistory = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Lead',
     }],
-    location: String,
-    related: String,
-    dateTime: String,
-    notes: String,
-    // meetingReminders: { type: String, required: true },
-    createBy: {
+    location: { type: String, default: "" },
+    related: { type: String, default: "" },
+    dateTime: { type: String, required: true },
+    notes: { type: String, default: "" },
+    createFor: { type: String },  // Added createFor as a string if it's needed in your data model
+    createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        require: true,
+        required: true,
     },
     timestamp: {
         type: Date,
-        default: Date.now
+        default: Date.now,
     },
     deleted: {
         type: Boolean,
         default: false,
     },
-})
+});
 
 module.exports = mongoose.model('Meetings', meetingHistory, 'Meetings');

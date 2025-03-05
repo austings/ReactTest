@@ -78,6 +78,7 @@ const AddMeeting = (props) => {
             // Fetch contacts if related is 'Contact'
             if (values.related === 'Contact') {
                 response = await getApi('api/contact/');  // Replace with actual endpoint for contacts
+                console.log('Response:', response?.data);
                 if (response?.status === 200) {
                     setContactData(response?.data);  // Set contact data
                 } else {

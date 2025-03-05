@@ -43,21 +43,46 @@ const AddMeeting = (props) => {
         initialValues: initialValues,
         validationSchema: meetingSchema,
         onSubmit: (values, { resetForm }) => {
-            
+            AddData(values);  // Call AddData to submit the form
         },
     });
     const { errors, touched, values, handleBlur, handleChange, handleSubmit, setFieldValue } = formik
 
-    const AddData = async () => {
-
+    const AddData = async (values) => {
+        setIsLoding(true);
+        try {
+            const response = await postApi('/meeting', values); 
+            if (response?.status === 201) {
+                toast.success('Meeting successfully added');
+                fetchData();  // Reload data from the server
+                onClose();  // Close the modal
+                formik.resetForm();  // Reset the form
+            }
+        } catch (error) {
+            toast.error('Error adding meeting');
+        } finally {
+            setIsLoding(false);
+        }
     };
 
     const fetchAllData = async () => {
-        
-    }
+        setIsLoding(true);
+        try {
+            // Fetch leads and contacts data from the API
+            const leadsResponse = await getApi('/leads'); 
+            setLeadData(leadsResponse?.data || []);
+            
+            const contactsResponse = await getApi('/contacts');
+            setContactData(contactsResponse?.data || []);
+        } catch (error) {
+            toast.error('Error fetching data');
+        } finally {
+            setIsLoding(false);
+        }
+    };
 
     useEffect(() => {
-
+        fetchAllData();
     }, [props.id, values.related])
 
     const extractLabels = (selectedItems) => {

@@ -1,6 +1,10 @@
 # Austin Sierra Test Submission
 This project involved debugging an existing login system and implementing a RESTful API for managing meetings. Although the task took longer than the estimated time (about 4 hours) due to additional debugging and optimization, I ensured that the code is clean, optimized, and adheres to best practices for scalability and maintainability.
 
+The primary changes can be found here:
+client\src\views\admin\meeting\components\Addmeeting.js
+server\controllers\meeting\_routes.js
+
 ## Challenges and Time Extensions
 While the task was initially estimated to take 1 hour, I spent additional time addressing the following:
 ### Debugging: 

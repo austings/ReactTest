@@ -1,4 +1,4 @@
-const MeetingHistory = require('../../model/schema/meeting')
+const meetingHistory = require('../../model/schema/meeting')
 const mongoose = require('mongoose');
 
 const add = async (req, res) => {
@@ -22,3 +22,4 @@ const deleteMany = async (req, res) => {
 }
 
 module.exports = { add, index, view, deleteData, deleteMany }
+

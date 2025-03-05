@@ -14,19 +14,15 @@ import { getApi, postApi } from 'services/api';
 
 const AddMeeting = (props) => {
     const { onClose, isOpen, setAction, from, fetchData, view } = props
-    const [leaddata, setLeadData] = useState([])
+    const [leaddata, setLeadData] = useState([]) // State for storing lead/contact data
     const [contactdata, setContactData] = useState([])
-    const [isLoding, setIsLoding] = useState(false)
+    const [isLoding, setIsLoding] = useState(false) //loader icon visibility
     const [contactModelOpen, setContactModel] = useState(false);
     const [leadModelOpen, setLeadModel] = useState(false);
     const todayTime = new Date().toISOString().split('.')[0];
-    const leadData = useSelector((state) => state?.leadData?.data);
-
     const user = JSON.parse(localStorage.getItem('user'))
 
-    const contactList = useSelector((state) => state?.contactData?.data)
-
-
+    // Initial form values based on props and state
     const initialValues = {
         agenda: '',
         attendes: props.leadContect === 'contactView' && props.id ? [props.id] : [],
@@ -38,6 +34,7 @@ const AddMeeting = (props) => {
         createBy: user?._id,
     }
 
+    // Formik hook to handle form state and validation
     const formik = useFormik({
         initialValues: initialValues,
         validationSchema: meetingSchema,
@@ -51,6 +48,7 @@ const AddMeeting = (props) => {
     });
     const { errors, touched, values, handleBlur, handleChange, handleSubmit, setFieldValue } = formik
 
+    // Function to add meeting data to the server
     const AddData = async (values) => {
         setIsLoding(true);
         try {
@@ -70,14 +68,14 @@ const AddMeeting = (props) => {
         }
     };
 
+    // Function to fetch contact or lead data based on the 'related' field
     const fetchAllData = async () => {
         setIsLoding(true);  // Show loading spinner
         try {
             let response;
             
-            // Fetch contacts if related is 'Contact'
             if (values.related === 'Contact') {
-                response = await getApi('api/contact/');  // Replace with actual endpoint for contacts
+                response = await getApi('api/contact/');  
                 console.log('Response:', response?.data);
                 if (response?.status === 200) {
                     setContactData(response?.data);  // Set contact data
@@ -86,9 +84,8 @@ const AddMeeting = (props) => {
                 }
             }
             
-            // Fetch leads if related is 'Lead'
             else if (values.related === 'Lead') {
-                response = await getApi('api/lead/');  // Replace with actual endpoint for leads
+                response = await getApi('api/lead/');  
                 if (response?.status === 200) {
                     setLeadData(response?.data);  // Set lead data
                 } else {
@@ -106,11 +103,13 @@ const AddMeeting = (props) => {
     useEffect(() => {
         fetchAllData();
     }, [props.id, values.related])
-
+    
+    // Helper function to extract the _id from selected items
     const extractLabels = (selectedItems) => {
         return selectedItems.map((item) => item._id);
     };
 
+    // Map the contact or lead data to items with appropriate labels
     const countriesWithEmailAsLabel = (values.related === "Contact" ? contactdata : leaddata)?.map((item) => ({
         ...item,
         value: item._id,

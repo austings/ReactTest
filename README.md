@@ -1,3 +1,14 @@
+# Austin Sierra Test Submission
+This project involved debugging an existing login system and implementing a RESTful API for managing meetings. Although the task took longer than the estimated time due to additional debugging and optimization, I ensured that the code is clean, optimized, and adheres to best practices for scalability and maintainability.
+
+## Challenges and Time Extensions
+While the task was initially estimated to take 1 hour, I spent additional time addressing the following:
+Debugging: I faced some issues related to the environment setup and ensuring proper login functionality, which required additional debugging.
+Code Optimization: To make the code more efficient, I spent extra time optimizing the API routes and ensuring best practices for scalability.
+Bugs and Spelling: There are lots of other bugs (firefox compatibility, custom contact model) and spelling issues which made it confusing at certain points.
+Lunch Break: I stopped to make some lunch. Twas excellent.
+I prioritized clean, maintainable code and effective error handling; triple checking my work, which resulted in more time spent than initially anticipated. 
+
 # React & Node.js Skill Test
 
 ## Estimated Time

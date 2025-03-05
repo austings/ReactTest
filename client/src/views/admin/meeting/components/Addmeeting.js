@@ -43,7 +43,6 @@ const AddMeeting = (props) => {
         validationSchema: meetingSchema,
         onSubmit: (values, { resetForm }) => {
             try {
-                console.log('Formik Submit: ', values);
                 AddData(values); // Call the AddData function here
             } catch (error) {
                 console.error('Error during form submission:', error);
@@ -53,13 +52,6 @@ const AddMeeting = (props) => {
     const { errors, touched, values, handleBlur, handleChange, handleSubmit, setFieldValue } = formik
 
     const AddData = async (values) => {
-        if (formik.isValid) {  // Ensure form is valid before submitting
-            console.log("Submitting meeting data", values);
-            // Proceed with submission logic...
-        } else {
-            console.log("Form is invalid, cannot submit");
-        }
-        console.log("AddData called with values:", values);  // Debug log
         setIsLoding(true);
         try {
             const response = await postApi('api/meeting/add', values); 
@@ -77,12 +69,7 @@ const AddMeeting = (props) => {
             setIsLoding(false);
         }
     };
-    const handleSubmitWithLogging = () => {
-        console.log('Form validation errors:', formik.errors); 
-        console.log('Form submission triggered');
-        formik.handleSubmit();
-        //formik.submitForm();
-    };
+
     const fetchAllData = async () => {
         setIsLoding(true);  // Show loading spinner
         try {

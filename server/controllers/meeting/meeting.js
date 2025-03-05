@@ -14,7 +14,7 @@ const add = async (req, res) => {
             dateTime: req.body.dateTime,
             notes: req.body.notes,
             createFor: req.body.createFor,
-            createdBy: req.body.createdBy,
+            createBy: req.body.createBy,
         });
 
         // Save the meeting to the database

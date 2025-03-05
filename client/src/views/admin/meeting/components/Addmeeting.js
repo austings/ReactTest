@@ -22,7 +22,6 @@ const AddMeeting = (props) => {
     const todayTime = new Date().toISOString().split('.')[0];
     const leadData = useSelector((state) => state?.leadData?.data);
 
-
     const user = JSON.parse(localStorage.getItem('user'))
 
     const contactList = useSelector((state) => state?.contactData?.data)
@@ -43,20 +42,33 @@ const AddMeeting = (props) => {
         initialValues: initialValues,
         validationSchema: meetingSchema,
         onSubmit: (values, { resetForm }) => {
-            AddData(values);  // Call AddData to submit the form
+            try {
+                console.log('Formik Submit: ', values);
+                AddData(values); // Call the AddData function here
+            } catch (error) {
+                console.error('Error during form submission:', error);
+            }
         },
     });
     const { errors, touched, values, handleBlur, handleChange, handleSubmit, setFieldValue } = formik
 
     const AddData = async (values) => {
-        console.log("HERE", values);
+        if (formik.isValid) {  // Ensure form is valid before submitting
+            console.log("Submitting meeting data", values);
+            // Proceed with submission logic...
+        } else {
+            console.log("Form is invalid, cannot submit");
+        }
+        console.log("AddData called with values:", values);  // Debug log
         setIsLoding(true);
         try {
-            const response = await postApi('/meeting', values); 
+            const response = await postApi('api/meeting/add', values); 
             if (response?.status === 201) {
                 toast.success('Meeting successfully added');
-                fetchData();  // Reload data from the server
-                onClose();  // Close the modal
+                //fetchData();  // Reload data from the server
+                props.onClose();
+                props.setAction((pre) => !pre)
+                //onClose();  // Close the modal
                 formik.resetForm();  // Reset the form
             }
         } catch (error) {
@@ -65,20 +77,41 @@ const AddMeeting = (props) => {
             setIsLoding(false);
         }
     };
-
+    const handleSubmitWithLogging = () => {
+        console.log('Form validation errors:', formik.errors); 
+        console.log('Form submission triggered');
+        formik.handleSubmit();
+        //formik.submitForm();
+    };
     const fetchAllData = async () => {
-        setIsLoding(true);
+        setIsLoding(true);  // Show loading spinner
         try {
-            // Fetch leads and contacts data from the API
-            const leadsResponse = await getApi('/leads'); 
-            setLeadData(leadsResponse?.data || []);
+            let response;
             
-            const contactsResponse = await getApi('/contacts');
-            setContactData(contactsResponse?.data || []);
+            // Fetch contacts if related is 'Contact'
+            if (values.related === 'Contact') {
+                response = await getApi('api/contact/');  // Replace with actual endpoint for contacts
+                if (response?.status === 200) {
+                    setContactData(response?.data);  // Set contact data
+                } else {
+                    toast.error('Error fetching contacts');
+                }
+            }
+            
+            // Fetch leads if related is 'Lead'
+            else if (values.related === 'Lead') {
+                response = await getApi('api/lead/');  // Replace with actual endpoint for leads
+                if (response?.status === 200) {
+                    setLeadData(response?.data);  // Set lead data
+                } else {
+                    toast.error('Error fetching leads');
+                }
+            }
         } catch (error) {
             toast.error('Error fetching data');
+            console.error(error);
         } finally {
-            setIsLoding(false);
+            setIsLoding(false);  // Hide loading spinner
         }
     };
 
@@ -214,7 +247,7 @@ const AddMeeting = (props) => {
 
                 </ModalBody>
                 <ModalFooter>
-                    <Button size="sm" variant='brand' me={2} disabled={isLoding ? true : false} onClick={handleSubmit}>{isLoding ? <Spinner /> : 'Save'}</Button>
+                    <Button size="sm" variant='brand' me={2} disabled={isLoding ? true : false} type="button" onClick={handleSubmit}>{isLoding ? <Spinner /> : 'Save'}</Button>
                     <Button sx={{
                         textTransform: "capitalize",
                     }} variant="outline"
@@ -228,5 +261,5 @@ const AddMeeting = (props) => {
     )
 }
 
-export default AddMeeting
+export default AddMeeting;
 

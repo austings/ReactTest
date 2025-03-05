@@ -9,5 +9,5 @@ export const meetingSchema = yup.object({ //updated to match server side
     dateTime: yup.string().required("Date Time Is required"),
     notes: yup.string(),
     createFor: yup.string(),  
-    createdBy: yup.string().required(),  
+    createBy: yup.string().required(),  
 });

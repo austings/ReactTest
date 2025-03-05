@@ -15,7 +15,7 @@ const meetingHistory = new mongoose.Schema({
     dateTime: { type: String, required: true },
     notes: { type: String, default: "" },
     createFor: { type: String },  // Added createFor as a string if it's needed in your data model
-    createdBy: {
+    createBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true,

@@ -1,5 +1,5 @@
 const express = require('express');
-const meetingController = require('./meetingController');  // Import the meeting controller
+const meetingController = require('./meeting');  // Import the meeting controller
 const auth = require('../../middelwares/auth');  // If you want to apply authentication middleware
 
 const router = express.Router();

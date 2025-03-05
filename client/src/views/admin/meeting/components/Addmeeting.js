@@ -49,6 +49,7 @@ const AddMeeting = (props) => {
     const { errors, touched, values, handleBlur, handleChange, handleSubmit, setFieldValue } = formik
 
     const AddData = async (values) => {
+        console.log("HERE", values);
         setIsLoding(true);
         try {
             const response = await postApi('/meeting', values); 

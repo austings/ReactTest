@@ -3,11 +3,11 @@ This project involved debugging an existing login system and implementing a REST
 
 The primary changes can be found here:
 
-client\src\views\admin\meeting\components\Addmeeting.js
+```client\src\views\admin\meeting\components\Addmeeting.js```
 
 AND
 
-server\controllers\meeting\_routes.js
+```server\controllers\meeting\_routes.js```
 
 ## Challenges and Time Extensions
 While the task was initially estimated to take 1 hour, I spent additional time addressing the following:
